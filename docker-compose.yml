@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  mediscreenwepapp:
+    image: ${DOCKER_REGISTRY-}mediscreenwepapp
+    build:
+      context: .
+      dockerfile: src/Mediscreen.WebApp/Dockerfile
+    depends_on:
+      - mediscreenapi
+    ports:
+      - "8088:80"
+
+  mediscreenapi:
+    image: ${DOCKER_REGISTRY-}mediscreenapi
+    build:
+      context: .
+      dockerfile: src/Mediscreen.API/Dockerfile
+    depends_on:
+      - sqldata
+      - mongodb
+    ports:
+      - "9099:80"
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"

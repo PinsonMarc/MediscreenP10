@@ -3,9 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediscreen", "Mediscreen\Mediscreen.csproj", "{330EEB8F-EC6B-4A87-833C-D25612D8D3E4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{1AF10892-A665-4668-90FB-2093C370D8F9}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1520BE51-1E53-41F8-93A2-BCFDF9ADEF38}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WepApp", "WepApp", "{FA48C8FF-A71F-4637-8A43-2035E835BECC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{894D2044-0B3E-4CF7-9AA2-D8BBE68A4F66}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediscreenAPI", "src\Mediscreen.API\MediscreenAPI.csproj", "{2F4906D8-EDF9-4C9E-AA02-253CB959FCE5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediscreenWepApp", "src\Mediscreen.WebApp\MediscreenWepApp.csproj", "{837537F4-9049-4EBC-8095-E9C9492713A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain.csproj", "{45AAAC6E-299F-4031-9F2E-8DE6D1D13502}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{BBD11ECA-665A-47B7-B294-3A5A458DFBE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,17 +23,30 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{330EEB8F-EC6B-4A87-833C-D25612D8D3E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{330EEB8F-EC6B-4A87-833C-D25612D8D3E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{330EEB8F-EC6B-4A87-833C-D25612D8D3E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{330EEB8F-EC6B-4A87-833C-D25612D8D3E4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1520BE51-1E53-41F8-93A2-BCFDF9ADEF38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1520BE51-1E53-41F8-93A2-BCFDF9ADEF38}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1520BE51-1E53-41F8-93A2-BCFDF9ADEF38}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1520BE51-1E53-41F8-93A2-BCFDF9ADEF38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F4906D8-EDF9-4C9E-AA02-253CB959FCE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F4906D8-EDF9-4C9E-AA02-253CB959FCE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F4906D8-EDF9-4C9E-AA02-253CB959FCE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F4906D8-EDF9-4C9E-AA02-253CB959FCE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{837537F4-9049-4EBC-8095-E9C9492713A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{837537F4-9049-4EBC-8095-E9C9492713A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{837537F4-9049-4EBC-8095-E9C9492713A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{837537F4-9049-4EBC-8095-E9C9492713A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45AAAC6E-299F-4031-9F2E-8DE6D1D13502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45AAAC6E-299F-4031-9F2E-8DE6D1D13502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45AAAC6E-299F-4031-9F2E-8DE6D1D13502}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45AAAC6E-299F-4031-9F2E-8DE6D1D13502}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD11ECA-665A-47B7-B294-3A5A458DFBE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD11ECA-665A-47B7-B294-3A5A458DFBE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD11ECA-665A-47B7-B294-3A5A458DFBE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD11ECA-665A-47B7-B294-3A5A458DFBE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2F4906D8-EDF9-4C9E-AA02-253CB959FCE5} = {1AF10892-A665-4668-90FB-2093C370D8F9}
+		{837537F4-9049-4EBC-8095-E9C9492713A5} = {FA48C8FF-A71F-4637-8A43-2035E835BECC}
+		{45AAAC6E-299F-4031-9F2E-8DE6D1D13502} = {894D2044-0B3E-4CF7-9AA2-D8BBE68A4F66}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CBE0225-95F4-4FA4-B18F-4691AB9AEB1C}
