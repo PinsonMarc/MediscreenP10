@@ -9,7 +9,7 @@ services:
     depends_on:
       - mediscreenapi
     ports:
-      - "8088:80"
+      - "8080:80"
 
   mediscreenapi:
     image: ${DOCKER_REGISTRY-}mediscreenapi
@@ -20,7 +20,7 @@ services:
       - sqldata
       - mongodb
     ports:
-      - "9099:80"
+      - "8081:80"
 
   sqldata:
     image: mcr.microsoft.com/mssql/server:2019-latest
