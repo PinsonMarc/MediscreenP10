@@ -1,4 +1,6 @@
-﻿namespace MediscreenWepApp;
+﻿using MediscreenWepApp.Services;
+
+namespace MediscreenWepApp;
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -11,6 +13,11 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllersWithViews();
+
+        services.AddHttpClient<IPatientService, PatientService>(client =>
+        {
+            client.BaseAddress = new Uri(Configuration["ApiUrl"]);
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

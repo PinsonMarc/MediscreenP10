@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MediscreenAPI.Model;
 
 namespace PoseidonApi.Services
 {
@@ -6,7 +7,7 @@ namespace PoseidonApi.Services
     {
         public static void ConfigureAutoMapper(this IServiceCollection services)
         {
-            var mapperConfig = new MapperConfiguration(mc =>
+            MapperConfiguration mapperConfig = new(mc =>
             {
                 mc.AddProfile(new MappingProfile());
             });

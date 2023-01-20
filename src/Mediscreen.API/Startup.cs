@@ -1,4 +1,8 @@
-﻿namespace MediscreenWepApp;
+﻿using MediscreenAPI.Model;
+using Microsoft.EntityFrameworkCore;
+using PoseidonApi.Services;
+
+namespace MediscreenWepApp;
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -14,6 +18,11 @@ public class Startup
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+
+        services.ConfigureAutoMapper();
+        services.AddDbContext<PatientContext>(
+            options => options.UseSqlServer(Configuration.GetConnectionString("PatientContext"))
+        );
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
