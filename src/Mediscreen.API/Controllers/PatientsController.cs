@@ -1,4 +1,6 @@
-﻿using MediscreenAPI.Model;
+﻿using AutoMapper;
+using Domain.DTOs;
+using MediscreenAPI.Model;
 using MediscreenAPI.Model.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,70 +10,48 @@ namespace MediscreenAPI.Controllers
     public class PatientsController : Controller
     {
         private readonly PatientContext _context;
+        protected IMapper _mapper;
 
-        public PatientsController(PatientContext context)
+        public PatientsController(PatientContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
         // GET: Patients
-        public async Task<IActionResult> Index()
+        public async Task<PatientDto[]> Index()
         {
-            return View(await _context.Patient.ToListAsync());
+            Patient[] patient = await _context.Patient.ToArrayAsync();
+
+            return _mapper.Map<Patient[], PatientDto[]>(patient);
         }
 
-        // GET: Patients/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Patients/5
+        public async Task<PatientDto?> Index(int id)
         {
-            if (id == null || _context.Patient == null)
-            {
-                return NotFound();
-            }
+            if (_context.Patient == null) return null;
 
-            Patient? patient = await _context.Patient
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (patient == null)
-            {
-                return NotFound();
-            }
+            Patient? res = await _context.Patient.FirstOrDefaultAsync(m => m.Id == id);
 
-            return View(patient);
-        }
-
-        // GET: Patients/Create
-        public IActionResult Create()
-        {
-            return View();
+            return _mapper.Map<Patient?, PatientDto>(res);
         }
 
         // POST: Patients/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Family,Given,Address,Phone,Dob,Sex,Id")] Patient patient)
+        public async Task<IActionResult> Create([Bind("Family,Given,Address,Phone,Dob,Sex,Id")] PatientDto dto)
         {
-            if (ModelState.IsValid)
+            try
             {
+                Patient patient = _mapper.Map<PatientDto, Patient>(dto);
                 _context.Add(patient);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
-            return View(patient);
-        }
-
-        // GET: Patients/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Patient == null)
+            catch (DbUpdateConcurrencyException ex)
             {
-                return NotFound();
+                return Conflict(ex);
             }
-
-            Patient? patient = await _context.Patient.FindAsync(id);
-            if (patient == null)
-            {
-                return NotFound();
-            }
-            return View(patient);
         }
 
         // POST: Patients/Edit/5
@@ -84,51 +64,29 @@ namespace MediscreenAPI.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
+                _context.Update(patient);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                if (!PatientExists(patient.Id))
                 {
-                    _context.Update(patient);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!PatientExists(patient.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    Conflict(ex);
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(patient);
-        }
-
-        // GET: Patients/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Patient == null)
-            {
-                return NotFound();
-            }
-
-            Patient? patient = await _context.Patient
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (patient == null)
-            {
-                return NotFound();
-            }
-
-            return View(patient);
+            return Ok();
         }
 
         // POST: Patients/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (_context.Patient == null)
             {
@@ -141,7 +99,7 @@ namespace MediscreenAPI.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Ok();
         }
 
         private bool PatientExists(int id)

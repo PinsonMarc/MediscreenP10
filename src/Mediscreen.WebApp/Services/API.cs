@@ -1,4 +1,4 @@
-﻿namespace CalifornianHealthApp.Services
+﻿namespace MediscreenWepApp.Services
 {
     public static class API
     {
