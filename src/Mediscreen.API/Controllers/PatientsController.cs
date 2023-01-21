@@ -84,8 +84,7 @@ namespace MediscreenAPI.Controllers
         }
 
         // POST: Patients/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             if (_context.Patient == null)
