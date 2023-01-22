@@ -16,6 +16,8 @@ services:
     build:
       context: .
       dockerfile: src/Mediscreen.API/Dockerfile
+    environment:
+      - ApiUrl=http://mediscreenapi
     depends_on:
       - sqldata
       - mongodb

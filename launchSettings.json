@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "mediscreenwepapp",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}",
+      "serviceActions": {
+        "mediscreenapi": "StartDebugging",
+        "mediscreenwepapp": "StartDebugging",
+        "mongodb": "StartWithoutDebugging",
+        "sqldata": "StartWithoutDebugging"
+      }
+    }
+  }
+}
