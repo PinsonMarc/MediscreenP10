@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediscreenAPI.Controllers
 {
+
     public class PatientsController : Controller
     {
         private readonly PatientContext _context;
@@ -26,20 +27,20 @@ namespace MediscreenAPI.Controllers
             return _mapper.Map<Patient[], PatientDto[]>(patient);
         }
 
-        // GET: Patients/5
-        public async Task<PatientDto?> Index(int id)
+        [HttpGet("[controller]/{id}")]
+        public async Task<IActionResult> Index(int id)
         {
-            if (_context.Patient == null) return null;
+            if (_context.Patient == null) return Problem("Entity set 'PatientContext.Patient' is null.");
 
             Patient? res = await _context.Patient.FirstOrDefaultAsync(m => m.Id == id);
 
-            return _mapper.Map<Patient?, PatientDto>(res);
+            if (res == null) return NotFound();
+            return Ok(_mapper.Map<Patient?, PatientDto>(res));
         }
 
         // POST: Patients/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Family,Given,Address,Phone,Dob,Sex,Id")] PatientDto dto)
+        public async Task<IActionResult> Create([FromBody, Bind("Family,Given,Address,Phone,Dob,Sex,Id")] PatientDto dto)
         {
             try
             {
@@ -56,22 +57,17 @@ namespace MediscreenAPI.Controllers
 
         // POST: Patients/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Family,Given,Address,Phone,Dob,Sex,Id")] Patient patient)
+        public async Task<IActionResult> Edit([FromBody, Bind("Family,Given,Address,Phone,Dob,Sex,Id")] PatientDto dto)
         {
-            if (id != patient.Id)
-            {
-                return NotFound();
-            }
-
             try
             {
+                Patient patient = _mapper.Map<PatientDto, Patient>(dto);
                 _context.Update(patient);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                if (!PatientExists(patient.Id))
+                if (!PatientExists(dto.Id))
                 {
                     return NotFound();
                 }

@@ -1,4 +1,5 @@
 ﻿using MediscreenAPI.Model;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.DTOs
 {
@@ -9,7 +10,9 @@ namespace Domain.DTOs
         public string? Given { get; set; }
         public string? Address { get; set; }
         public string? Phone { get; set; }
-        public DateOnly Dob { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime Dob { get; set; }
         public Sex Sex { get; set; }
     }
 }
