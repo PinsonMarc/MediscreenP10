@@ -27,12 +27,17 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        using (IServiceScope scope = app.ApplicationServices.CreateScope())
+        {
+            using PatientContext? context = scope.ServiceProvider.GetService<PatientContext>();
+            if (context is not null) context.Database.EnsureCreated();
+        }
+
         if (env.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        app.UseHttpsRedirection();
 
         app.UseRouting();
 

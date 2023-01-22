@@ -41,38 +41,38 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Pages\Shared\_ValidationScriptsPartial.cshtml">
+    <Content Update="Views\Shared\_ValidationScriptsPartial.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Patients\Create.cshtml" />
+    <UpToDateCheckInput Remove="Views\Patients\Create.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Patients\Create.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\Patients\Delete.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\Patients\Details.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\Patients\Edit.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\Patients\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Patients\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Patients\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Patients\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Patients\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Patients\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Patients\Delete.cshtml" />
+    <UpToDateCheckInput Remove="Views\Patients\Delete.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Patients\Details.cshtml" />
+    <UpToDateCheckInput Remove="Views\Patients\Details.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Patients\Edit.cshtml" />
+    <UpToDateCheckInput Remove="Views\Patients\Edit.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Patients\Index.cshtml" />
+    <UpToDateCheckInput Remove="Views\Patients\Index.cshtml" />
   </ItemGroup>
 
 </Project>
