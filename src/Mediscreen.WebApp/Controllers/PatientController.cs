@@ -4,37 +4,36 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MediscreenAPI.Controllers
 {
-    public class PatientsController : Controller
+    public class PatientController : Controller
     {
         private IPatientService _patientService;
 
-        public PatientsController(IPatientService patientService)
+        public PatientController(IPatientService patientService)
         {
             _patientService = patientService;
         }
 
-        // GET: Patients
+        // GET: Patient
         public async Task<IActionResult> Index()
         {
             return View(await _patientService.ReadAll());
         }
 
-        // GET: Patients/Details/5
+        // GET: Patient/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             return await TryFindReturnView(id);
         }
 
-        // GET: Patients/Create
-        public IActionResult Create()
+        // GET: Patient/Add
+        public IActionResult Add()
         {
             return View();
         }
 
-        // POST: Patients/Create
+        // POST: Patient/Add
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Family,Given,Address,Phone,Dob,Sex")] PatientDto patient)
+        public async Task<IActionResult> Add([Bind("Family,Given,Address,Phone,Dob,Sex")] PatientDto patient)
         {
             if (ModelState.IsValid)
             {
@@ -45,17 +44,14 @@ namespace MediscreenAPI.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Edit/5
+        // GET: Patient/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             return await TryFindReturnView(id);
         }
 
-        // POST: Patients/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Patient/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Family,Given,Address,Phone,Dob,Sex,Id")] PatientDto patient)
         {
             if (id != patient.Id)
@@ -72,15 +68,14 @@ namespace MediscreenAPI.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Delete/5
+        // GET: Patient/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             return await TryFindReturnView(id);
         }
 
-        // POST: Patients/Delete/5
+        // POST: Patient/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             HttpResponseMessage res = await _patientService.Delete(id);

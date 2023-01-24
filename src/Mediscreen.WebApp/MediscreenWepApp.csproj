@@ -48,31 +48,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Patients\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Patient\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Patient\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Patient\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Patient\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Patients\Create.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Patients\Delete.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Patients\Details.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Patients\Edit.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Patients\Index.cshtml" />
+    <UpToDateCheckInput Remove="Views\Patient\Delete.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Patients\Delete.cshtml" />
+    <UpToDateCheckInput Remove="Views\Patient\Details.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Patients\Details.cshtml" />
+    <UpToDateCheckInput Remove="Views\Patient\Edit.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Patients\Edit.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Patients\Index.cshtml" />
+    <UpToDateCheckInput Remove="Views\Patient\Index.cshtml" />
   </ItemGroup>
 
 </Project>
