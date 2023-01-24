@@ -13,9 +13,15 @@ namespace MediscreenAPI.Services
         {
             MongoClient mongoClient = new(historyDatabaseSettings.Value.ConnectionString);
 
+            //IEnumerable<string> l = mongoClient.ListDatabaseNames().Current; => timing out
+
             IMongoDatabase mongoDatabase = mongoClient.GetDatabase(historyDatabaseSettings.Value.DatabaseName);
 
-            _booksCollection = mongoDatabase.GetCollection<History>(historyDatabaseSettings.Value.BooksCollectionName);
+            //IEnumerable<string> b = mongoDatabase.ListCollectionNames().Current; => timing out
+
+            //if (!mongoDatabase.ListCollections().ToEnumerable().Any())
+            //    mongoDatabase.CreateCollection(historyDatabaseSettings.Value.BooksCollectionName);
+            _booksCollection = mongoDatabase.GetCollection<History>(historyDatabaseSettings.Value.HistoryCollectionName);
         }
 
         public async Task<List<History>> GetAsync()

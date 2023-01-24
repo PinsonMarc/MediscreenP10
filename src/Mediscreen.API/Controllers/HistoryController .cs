@@ -7,7 +7,6 @@ namespace MediscreenAPI.Controllers
 
     public class HistoryController : Controller
     {
-
         private readonly HistoryService _historyService;
 
         public HistoryController(HistoryService historyService)
@@ -16,17 +15,17 @@ namespace MediscreenAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<List<History>> Get()
+        public async Task<List<History>> Index()
         {
             return await _historyService.GetAsync();
         }
 
         [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult<History>> Get(string id)
+        public async Task<ActionResult<History>> Index(string id)
         {
             History? history = await _historyService.GetAsync(id);
 
-            if (history is null)
+            if (history == null)
             {
                 return NotFound();
             }
@@ -35,19 +34,19 @@ namespace MediscreenAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(History newBook)
+        public async Task<IActionResult> Create(History newBook)
         {
             await _historyService.CreateAsync(newBook);
 
-            return CreatedAtAction(nameof(Get), new { id = newBook.Id }, newBook);
+            return CreatedAtAction(nameof(Create), new { id = newBook.Id }, newBook);
         }
 
         [HttpPost("{id:length(24)}")]
-        public async Task<IActionResult> Update(string id, History updatedHistory)
+        public async Task<IActionResult> Edit(string id, History updatedHistory)
         {
             History? history = await _historyService.GetAsync(id);
 
-            if (history is null)
+            if (history == null)
             {
                 return NotFound();
             }
@@ -60,11 +59,11 @@ namespace MediscreenAPI.Controllers
         }
 
         [HttpDelete("{id:length(24)}")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Deletea(string id)
         {
             History? history = await _historyService.GetAsync(id);
 
-            if (history is null)
+            if (history == null)
             {
                 return NotFound();
             }

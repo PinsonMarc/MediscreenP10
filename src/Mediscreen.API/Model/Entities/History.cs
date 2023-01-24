@@ -9,6 +9,6 @@ namespace MediscreenAPI.Model.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
         public int? PatId { get; set; }
-        public List<string> Notes { get; set; } = new List<string>();
+        public string? Notes { get; set; }
     }
 }
