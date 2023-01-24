@@ -24,10 +24,5 @@ namespace MediscreenWepApp.Controllers
             _logger.LogError("An error has occured");
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
     }
 }
