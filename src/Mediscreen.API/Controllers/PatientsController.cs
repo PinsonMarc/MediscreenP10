@@ -20,6 +20,7 @@ namespace MediscreenAPI.Controllers
         }
 
         // GET: Patients
+        [HttpGet]
         public async Task<PatientDto[]> Index()
         {
             Patient[] patient = await _context.Patient.ToArrayAsync();
@@ -47,7 +48,7 @@ namespace MediscreenAPI.Controllers
                 Patient patient = _mapper.Map<PatientDto, Patient>(dto);
                 _context.Add(patient);
                 await _context.SaveChangesAsync();
-                return Ok();
+                return NoContent();
             }
             catch (DbUpdateConcurrencyException ex)
             {
@@ -55,7 +56,7 @@ namespace MediscreenAPI.Controllers
             }
         }
 
-        // POST: Patients/Edit/5
+        // POST: Patients/Edit
         [HttpPost]
         public async Task<IActionResult> Edit([FromBody, Bind("Family,Given,Address,Phone,Dob,Sex,Id")] PatientDto dto)
         {
@@ -76,11 +77,11 @@ namespace MediscreenAPI.Controllers
                     Conflict(ex);
                 }
             }
-            return Ok();
+            return NoContent();
         }
 
         // POST: Patients/Delete/5
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             if (_context.Patient == null)
@@ -94,7 +95,7 @@ namespace MediscreenAPI.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return Ok();
+            return NoContent();
         }
 
         private bool PatientExists(int id)

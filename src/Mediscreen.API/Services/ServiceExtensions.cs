@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediscreenAPI.Model;
+using MediscreenAPI.Services;
 
 namespace PoseidonApi.Services
 {
@@ -13,6 +14,12 @@ namespace PoseidonApi.Services
             });
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
+        }
+
+        public static void ConfigureMongoDb(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<HistoryDatabaseSettings>(configuration.GetSection("HistoryDatabase"));
+            services.AddSingleton<HistoryService>();
         }
     }
 }

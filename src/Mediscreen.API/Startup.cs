@@ -20,9 +20,12 @@ public class Startup
         services.AddSwaggerGen();
 
         services.ConfigureAutoMapper();
+        //SQL
         services.AddDbContext<PatientContext>(
             options => options.UseSqlServer(Configuration.GetConnectionString("PatientContext"))
         );
+        //NoSql
+        services.ConfigureMongoDb(Configuration);
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

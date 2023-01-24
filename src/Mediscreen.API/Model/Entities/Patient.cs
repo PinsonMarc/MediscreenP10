@@ -1,7 +1,8 @@
 ﻿namespace MediscreenAPI.Model.Entities
 {
-    public class Patient : Entity
+    public class Patient
     {
+        public int Id { get; set; }
         public string? Family { get; set; }
         public string? Given { get; set; }
         public string? Address { get; set; }
