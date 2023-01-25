@@ -20,6 +20,7 @@ namespace PoseidonApi.Services
         {
             services.Configure<HistoryDatabaseSettings>(configuration.GetSection("HistoryDatabase"));
             services.AddSingleton<HistoryService>();
+            services.AddSingleton<IReadHistoryService>(provider => provider.GetService<HistoryService>());
         }
     }
 }

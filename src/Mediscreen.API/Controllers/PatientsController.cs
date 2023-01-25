@@ -28,7 +28,7 @@ namespace MediscreenAPI.Controllers
             return _mapper.Map<Patient[], PatientDto[]>(patient);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:length(24)}")]
         public async Task<IActionResult> Read(int id)
         {
             if (_context.Patient == null) return Problem("Entity set 'PatientContext.Patient' is null.");

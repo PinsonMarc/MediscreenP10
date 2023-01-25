@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace MediscreenAPI.Model.Entities
 {
-    public class Note
+    public class History
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

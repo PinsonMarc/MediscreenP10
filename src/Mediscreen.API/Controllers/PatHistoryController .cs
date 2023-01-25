@@ -15,18 +15,19 @@ namespace MediscreenAPI.Controllers
         }
 
         [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult<Note>> Read(string id)
+        public async Task<ActionResult<History>> Read(string id)
         {
-            Note? history = await _historyService.GetAsync(id);
+            History? history = await _historyService.GetAsync(id);
 
             if (history == null) return NotFound();
 
             return Ok(history);
         }
 
-        public async Task<ActionResult<List<Note>>> ReadByPatId(int patId)
+        [HttpGet("{id:length(24)}")]
+        public async Task<ActionResult<List<History>>> ReadByPatId(int patId)
         {
-            List<Note> history = await _historyService.GetByPatIdAsync(patId);
+            List<History> history = await _historyService.GetByPatIdAsync(patId);
 
             if (history == null) return NotFound();
 
@@ -34,7 +35,7 @@ namespace MediscreenAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(Note newNote)
+        public async Task<IActionResult> Add(History newNote)
         {
             await _historyService.CreateAsync(newNote);
 
@@ -42,9 +43,9 @@ namespace MediscreenAPI.Controllers
         }
 
         [HttpPost("{id:length(24)}")]
-        public async Task<IActionResult> Edit(string id, Note updatedNote)
+        public async Task<IActionResult> Edit(string id, History updatedNote)
         {
-            Note? history = await _historyService.GetAsync(id);
+            History? history = await _historyService.GetAsync(id);
 
             if (history == null) return NotFound();
 
@@ -58,7 +59,7 @@ namespace MediscreenAPI.Controllers
         [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> Delete(string id)
         {
-            Note? history = await _historyService.GetAsync(id);
+            History? history = await _historyService.GetAsync(id);
 
             if (history == null) return NotFound();
 

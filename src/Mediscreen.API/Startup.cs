@@ -36,7 +36,7 @@ public class Startup
         using (IServiceScope scope = app.ApplicationServices.CreateScope())
         {
             using PatientContext? context = scope.ServiceProvider.GetService<PatientContext>();
-            if (context is not null) context.Database.EnsureCreated();
+            if (context != null) context.Database.EnsureCreated();
         }
 
         if (env.IsDevelopment())
@@ -53,8 +53,6 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
-            //    name: "default",
-            //    pattern: "{controller=Home}/{action=Index}/{id?}"
         });
     }
 }
