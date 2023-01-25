@@ -7,39 +7,33 @@ namespace MediscreenAPI.Services
 {
     public class HistoryService
     {
-        private readonly IMongoCollection<History> _booksCollection;
+        private readonly IMongoCollection<Note> _booksCollection;
 
         public HistoryService(IOptions<HistoryDatabaseSettings> historyDatabaseSettings)
         {
             MongoClient mongoClient = new(historyDatabaseSettings.Value.ConnectionString);
 
-            //IEnumerable<string> l = mongoClient.ListDatabaseNames().Current; => timing out
-
             IMongoDatabase mongoDatabase = mongoClient.GetDatabase(historyDatabaseSettings.Value.DatabaseName);
 
-            //IEnumerable<string> b = mongoDatabase.ListCollectionNames().Current; => timing out
-
-            //if (!mongoDatabase.ListCollections().ToEnumerable().Any())
-            //    mongoDatabase.CreateCollection(historyDatabaseSettings.Value.BooksCollectionName);
-            _booksCollection = mongoDatabase.GetCollection<History>(historyDatabaseSettings.Value.HistoryCollectionName);
+            _booksCollection = mongoDatabase.GetCollection<Note>(historyDatabaseSettings.Value.HistoryCollectionName);
         }
 
-        public async Task<List<History>> GetAsync()
+        public async Task<List<Note>> GetByPatIdAsync(int patId)
         {
-            return await _booksCollection.Find(_ => true).ToListAsync();
+            return await _booksCollection.Find(x => x.PatId == patId).ToListAsync();
         }
 
-        public async Task<History?> GetAsync(string id)
+        public async Task<Note?> GetAsync(string id)
         {
             return await _booksCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task CreateAsync(History newHistory)
+        public async Task CreateAsync(Note newHistory)
         {
             await _booksCollection.InsertOneAsync(newHistory);
         }
 
-        public async Task UpdateAsync(string id, History updatedHistory)
+        public async Task UpdateAsync(string id, Note updatedHistory)
         {
             await _booksCollection.ReplaceOneAsync(x => x.Id == id, updatedHistory);
         }

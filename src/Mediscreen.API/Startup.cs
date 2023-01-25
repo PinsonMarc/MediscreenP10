@@ -17,7 +17,10 @@ public class Startup
         services.AddControllersWithViews();
 
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(c =>
+        {
+            c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+        });
 
         services.ConfigureAutoMapper();
         //SQL
@@ -39,16 +42,19 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mediscreen API V1");
+            });
         }
 
         app.UseRouting();
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            endpoints.MapControllers();
+            //    name: "default",
+            //    pattern: "{controller=Home}/{action=Index}/{id?}"
         });
     }
 }

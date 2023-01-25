@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediscreenAPI.Controllers
 {
-
+    [Route("[controller]/[action]")]
     public class PatientsController : Controller
     {
         private readonly PatientContext _context;
@@ -21,15 +21,15 @@ namespace MediscreenAPI.Controllers
 
         // GET: Patients
         [HttpGet]
-        public async Task<PatientDto[]> Index()
+        public async Task<PatientDto[]> Read()
         {
             Patient[] patient = await _context.Patient.ToArrayAsync();
 
             return _mapper.Map<Patient[], PatientDto[]>(patient);
         }
 
-        [HttpGet("[controller]/{id}")]
-        public async Task<IActionResult> Index(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Read(int id)
         {
             if (_context.Patient == null) return Problem("Entity set 'PatientContext.Patient' is null.");
 
