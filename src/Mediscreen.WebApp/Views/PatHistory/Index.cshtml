@@ -10,17 +10,18 @@
         @foreach (var item in Model.Item2)
         {
             <p>@item</p>
-            <br>
+            <hr>
         }
     }
 </div>
 
 <div id = "note-validation" class="text-danger"></div>
-<textarea id="textData" rows="5" cols="50">
-    Enter a new note...
-</textarea>
+<textarea id="textData" rows="5" cols="50" style="display:block;"></textarea>
+<br>
+<button id="submitButton" class="btn btn-primary">Add new note</button>
 
-<button id="submitButton">Add new note</button>
+<a href="/Patient">Go to patients view</a>
+
 
 <script>
     document.getElementById("submitButton").addEventListener("click", function () {
@@ -33,9 +34,9 @@
                 Note: textData
             },
             success: function (response) {
-                $("#notes-container").append("<p>" + textData + "</p> <br>");
+                $("#notes-container").append("<p>" + textData + "</p> <hr>");
                 $("#note-validation").text('');
-            }
+            },
             error: function (xhr, status, error) {
                 if (xhr.status === 400) {
                     $("#note-validation").text('The note cannot be empty');

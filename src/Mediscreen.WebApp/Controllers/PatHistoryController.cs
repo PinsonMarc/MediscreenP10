@@ -1,4 +1,6 @@
-﻿using MediscreenAPI.Model.Entities;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using MediscreenAPI.Model.Entities;
 using MediscreenWepApp.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +9,12 @@ namespace MediscreenAPI.Controllers
     public class PatHistoryController : Controller
     {
         private IPatientService _patientService;
+        private IValidator<NoteDto> _validator;
 
-        public PatHistoryController(IPatientService patientService)
+        public PatHistoryController(IPatientService patientService, IValidator<NoteDto> validator)
         {
             _patientService = patientService;
+            _validator = validator;
         }
 
         // GET: PatHistory/1
@@ -30,7 +34,9 @@ namespace MediscreenAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([Bind("PatId,Note")] NoteDto newNote)
         {
-            if (ModelState.IsValid)
+            ValidationResult validation = await _validator.ValidateAsync(newNote);
+
+            if (validation.IsValid)
             {
                 HttpResponseMessage result = await _patientService.AddNote(newNote);
                 if (result.IsSuccessStatusCode) return NoContent();

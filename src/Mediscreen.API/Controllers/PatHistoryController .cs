@@ -15,31 +15,40 @@ namespace MediscreenAPI.Controllers
         }
 
         [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult<History>> Read(string id)
+        public async Task<ActionResult<string>> Read(string id)
         {
             History? history = await _historyService.GetAsync(id);
 
             if (history == null) return NotFound();
 
-            return Ok(history);
+            return Ok(history.Note);
         }
 
-        [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult<List<History>>> ReadByPatId(int patId)
+        [HttpGet("{patId}")]
+        public async Task<ActionResult<List<string>>> ReadByPatId(int patId)
         {
             List<History> history = await _historyService.GetByPatIdAsync(patId);
-
+            List<string> result = new();
             if (history == null) return NotFound();
 
-            return Ok(history);
+            foreach (History item in history)
+            {
+                result.Add(item.Note);
+            }
+            return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(History newNote)
+        public async Task<IActionResult> Add([FromBody, Bind("PatId,Note")] NoteDto noteDto)
         {
-            await _historyService.CreateAsync(newNote);
+            History newHistory = new()
+            {
+                PatId = noteDto.PatId,
+                Note = noteDto.Note
+            };
+            await _historyService.CreateAsync(newHistory);
 
-            return CreatedAtAction(nameof(Add), new { id = newNote.Id }, newNote);
+            return CreatedAtAction(nameof(Add), new { id = newHistory.Id }, newHistory);
         }
 
         [HttpPost("{id:length(24)}")]

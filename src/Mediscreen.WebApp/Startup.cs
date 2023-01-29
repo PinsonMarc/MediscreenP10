@@ -1,4 +1,5 @@
 ﻿using MediscreenWepApp.Services;
+using PoseidonApi.Services;
 
 namespace MediscreenWepApp;
 public class Startup
@@ -18,6 +19,7 @@ public class Startup
         {
             client.BaseAddress = new Uri(Configuration["ApiUrl"]);
         });
+        services.ConfigureFluentValidation();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
