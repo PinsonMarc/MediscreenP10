@@ -44,7 +44,7 @@ namespace MediscreenAPI.Controllers
             History newHistory = new()
             {
                 PatId = noteDto.PatId,
-                Note = noteDto.Note
+                Note = noteDto.Note ?? ""
             };
             await _historyService.CreateAsync(newHistory);
 
