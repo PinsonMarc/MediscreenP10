@@ -12,12 +12,12 @@ namespace MediscreenAPI.Controllers
     {
         private readonly PatientContext _context;
         private readonly IReadHistoryService _readHistoryService;
-        private readonly IOptions<RiskRules> _riskRules;
+        private readonly RiskRules _riskRules;
 
         public AssessController(IReadHistoryService historyService, PatientContext context, IOptions<RiskRules> riskRules)
         {
             _readHistoryService = historyService ?? throw new ArgumentNullException(nameof(IReadHistoryService));
-            _riskRules = riskRules ?? throw new ArgumentNullException(nameof(IOptions<RiskRules>));
+            _riskRules = riskRules.Value ?? throw new ArgumentNullException(nameof(IOptions<RiskRules>));
             _context = context;
         }
 
@@ -50,6 +50,7 @@ namespace MediscreenAPI.Controllers
         private async Task AssessPatient(Patient pat)
         {
             List<History> history = await _readHistoryService.GetByPatIdAsync(pat.Id);
+            Sex sex = pat.Sex;
 
 
         }
