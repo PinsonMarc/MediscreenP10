@@ -43,16 +43,8 @@ namespace MediscreenWepApp.Services
             return res;
         }
 
-        public async Task<HttpResponseMessage> AddNote(int patId, string note)
-        {
-            NoteDto noteDto = new()
-            {
-                PatId = patId,
-                Note = note
-            };
-            HttpResponseMessage response = await _httpClient.PostAsJsonAsync<NoteDto>(API.PatHistory.create, noteDto);
-            return response;
-        }
+        public async Task<HttpResponseMessage> AddNote(NoteDto note)
+            => await _httpClient.PostAsJsonAsync<NoteDto>(API.PatHistory.create, note);
 
         public async Task<string> AssessById(int patId)
             => await _httpClient.GetStringAsync(API.Assess.ById(patId));

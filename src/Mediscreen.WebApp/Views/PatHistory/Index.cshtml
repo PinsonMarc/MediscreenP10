@@ -1,0 +1,48 @@
+﻿@model (int, List<string>?) 
+
+@{
+    ViewData["Title"] = "Patient history";
+}
+
+<h1>Patient history</h1>
+<div id="notes-container">
+    @if (Model.Item2 is not null) {
+        @foreach (var item in Model.Item2)
+        {
+            <p>@item</p>
+            <br>
+        }
+    }
+</div>
+
+<div id = "note-validation" class="text-danger"></div>
+<textarea id="textData" rows="5" cols="50">
+    Enter a new note...
+</textarea>
+
+<button id="submitButton">Add new note</button>
+
+<script>
+    document.getElementById("submitButton").addEventListener("click", function () {
+        var textData = document.getElementById("textData").value;
+        $.ajax({
+            type: "POST",
+            url: "/PatHistory/Add",
+            data: { 
+                PatId: @Model.Item1, 
+                Note: textData
+            },
+            success: function (response) {
+                $("#notes-container").append("<p>" + textData + "</p> <br>");
+                $("#note-validation").text('');
+            }
+            error: function (xhr, status, error) {
+                if (xhr.status === 400) {
+                    $("#note-validation").text('The note cannot be empty');
+                    return;
+                } 
+                $("#note-validation").text('Internal error, try later');
+            }
+        });
+    });
+</script>
