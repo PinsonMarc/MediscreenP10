@@ -48,7 +48,7 @@ namespace MediscreenAPI.Controllers
                 Patient patient = _mapper.Map<PatientDto, Patient>(dto);
                 _context.Add(patient);
                 await _context.SaveChangesAsync();
-                return NoContent();
+                return CreatedAtAction(nameof(Create), new { id = patient.Id }, patient);
             }
             catch (DbUpdateConcurrencyException ex)
             {

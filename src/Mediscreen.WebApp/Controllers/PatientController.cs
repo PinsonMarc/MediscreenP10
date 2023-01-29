@@ -16,7 +16,7 @@ namespace MediscreenAPI.Controllers
         // GET: Patient
         public async Task<IActionResult> Index()
         {
-            return View(await _patientService.ReadAll());
+            return View(await _patientService.ReadAllPatients());
         }
 
         // GET: Patient/Details/5
@@ -37,7 +37,7 @@ namespace MediscreenAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                HttpResponseMessage result = await _patientService.Create(patient);
+                HttpResponseMessage result = await _patientService.CreatePatient(patient);
                 if (result.IsSuccessStatusCode) return RedirectToAction(nameof(Index));
                 return StatusCode((int)result.StatusCode);
             }
@@ -61,7 +61,7 @@ namespace MediscreenAPI.Controllers
 
             if (ModelState.IsValid)
             {
-                HttpResponseMessage result = await _patientService.Update(patient);
+                HttpResponseMessage result = await _patientService.UpdatePatient(patient);
                 if (result.IsSuccessStatusCode) return RedirectToAction(nameof(Index));
                 return StatusCode((int)result.StatusCode);
             }
@@ -78,7 +78,7 @@ namespace MediscreenAPI.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            HttpResponseMessage res = await _patientService.Delete(id);
+            HttpResponseMessage res = await _patientService.DeletePatient(id);
             if (res.IsSuccessStatusCode)
             {
                 return RedirectToAction(nameof(Index));
@@ -92,7 +92,7 @@ namespace MediscreenAPI.Controllers
             {
                 return NotFound();
             }
-            PatientDto? patient = await _patientService.Read((int)id);
+            PatientDto? patient = await _patientService.ReadPatient((int)id);
             if (patient == null)
             {
                 return NotFound();

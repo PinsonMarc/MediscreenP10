@@ -39,7 +39,7 @@ namespace MediscreenAPI.Controllers
         {
             await _historyService.CreateAsync(newNote);
 
-            return NoContent();
+            return CreatedAtAction(nameof(Add), new { id = newNote.Id }, newNote);
         }
 
         [HttpPost("{id:length(24)}")]
