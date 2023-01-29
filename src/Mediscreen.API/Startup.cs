@@ -29,6 +29,8 @@ public class Startup
         );
         //NoSql
         services.ConfigureMongoDb(Configuration);
+
+        services.Configure<RiskRules>(Configuration.GetSection("RiskRules"));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
