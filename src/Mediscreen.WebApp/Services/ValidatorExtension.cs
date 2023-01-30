@@ -19,7 +19,7 @@ namespace PoseidonApi.Services
         {
             RuleFor(x => x.Given).NotEmpty();
             RuleFor(x => x.Family).NotEmpty();
-            RuleFor(x => x.Sex).NotEmpty();
+            RuleFor(x => x.Sex).NotNull();
             RuleFor(x => x.Dob)
                 .Must(x => x < DateTime.Now && x > new DateTime(1900, 1, 1))
                 .WithMessage("Date must be before the current date and after 01/01/1900.");
@@ -31,6 +31,7 @@ namespace PoseidonApi.Services
         public NoteValidator()
         {
             RuleFor(x => x.Note).NotEmpty();
+            RuleFor(x => x.PatId).NotEmpty().GreaterThanOrEqualTo(1);
         }
     }
 }
