@@ -1,0 +1,32 @@
+{
+  "Triggers": [ "Hemoglobin A1C", "Microalbumin", "Body Height", "Body Weight", "Smoker", "Abnormal", "Cholesterol", "Dizziness", "Relapse", "Reaction", "Antibodies"],
+  "GapYear": 30,
+  "RiskLevels": [
+    {
+      "Name": "None"
+    },
+    {
+      "Name": "Borderline",
+      "Rules": {
+        "Over": 2
+      }
+    },
+    {
+      "Name": "In Danger",
+      "Rules": {
+        "UnderM": 3,
+        "UnderF": 4,
+        "Over": 6
+      }
+    },
+    {
+      "Name": "Early Onset",
+      "Rules": {
+        "UnderM": 5,
+        "UnderF": 7,
+        "Over": 8
+      }
+    }
+  ]
+}
+
