@@ -1,6 +1,5 @@
 using FluentValidation.TestHelper;
 using MediscreenAPI.Model.Entities;
-using Moq;
 using PoseidonApi.Services;
 
 namespace MediscreenWebApp.tests.UnitTests
