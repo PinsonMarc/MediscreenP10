@@ -99,5 +99,9 @@ namespace MediscreenAPI.Controllers
             }
             return View(patient);
         }
+
+        // GET: Patient/Assess/1
+        public async Task<string> Assess(int id)
+            => await _patientService.AssessById(id);
     }
 }

@@ -25,17 +25,12 @@ namespace MediscreenAPI.Controllers
         }
 
         [HttpGet("{patId}")]
-        public async Task<ActionResult<List<string>>> ReadByPatId(int patId)
+        public async Task<ActionResult<string[]>> ReadByPatId(int patId)
         {
-            List<History> history = await _historyService.GetByPatIdAsync(patId);
-            List<string> result = new();
+            string[] history = await _historyService.GetByPatIdAsync(patId);
             if (history == null) return NotFound();
 
-            foreach (History item in history)
-            {
-                result.Add(item.Note);
-            }
-            return Ok(result);
+            return Ok(history);
         }
 
         [HttpPost]

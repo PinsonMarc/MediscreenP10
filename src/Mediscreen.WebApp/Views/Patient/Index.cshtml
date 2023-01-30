@@ -34,10 +34,27 @@
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>  | 
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a>  | 
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>  | 
-                <a asp-controller="PatHistory" asp-route-id="@item.Id">History</a>  | 
-                <a asp-action="Assess" asp-route-id="@item.Id">Assess</a> 
+                <a asp-controller="PatHistory" asp-route-id="@item.Id">History</a>  |
+                <a href="#" onclick="(function(){Assess(@item.Id)})();">Assess</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<div id="assess-result" class="text-danger"></div>
+
+<script>
+    function Assess(id){
+        $.ajax({
+            type: "GET",
+            url: "Patient/Assess/" + id,
+            success: function (response) {
+                $("#assess-result").text(response);
+            },
+            error: function (xhr, status, error) {
+                $("#note-validation").text('Internal error');
+            }
+        });
+    }
+</script>

@@ -11,14 +11,15 @@
             for (int i = RiskLevels.Length - 1; i >= 0; i--)
                 if (RiskLevels[i].InsideRisk(age, sex, GapYear, nTriggers))
                     return RiskLevels[i].Name;
-            return "None";
+
+            throw new Exception("There is no default risk definition in RiskRules, see appsetings.json to configure one");
         }
     }
 
     public class RiskDefinition
     {
-        public string Name { get; } = null!;
-        public Rules? Rules { get; }
+        public string Name { get; set; } = null!;
+        public Rules? Rules { get; set; }
 
         public bool InsideRisk(int age, Sex sex, int gapYear, int nTriggers)
             => (Rules == null) ||
@@ -29,8 +30,8 @@
 
     public class Rules
     {
-        public int? UnderM { get; }
-        public int? UnderF { get; }
-        public int? Over { get; }
+        public int? UnderM { get; set; }
+        public int? UnderF { get; set; }
+        public int? Over { get; set; }
     }
 }

@@ -23,9 +23,15 @@ namespace MediscreenAPI.Services
             return await _booksCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<List<History>> GetByPatIdAsync(int patId)
+        public async Task<string[]> GetByPatIdAsync(int patId)
         {
-            return await _booksCollection.Find(x => x.PatId == patId).ToListAsync();
+            List<History> history = await _booksCollection.Find(x => x.PatId == patId).ToListAsync();
+            string[] result = new string[history.Count];
+
+            for (int i = 0; i < history.Count; i++)
+                result[i] = history[i].Note;
+
+            return result;
         }
 
         public async Task CreateAsync(History newHistory)

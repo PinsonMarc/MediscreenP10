@@ -12,5 +12,7 @@ namespace MediscreenWepApp.Services
         Task<HttpResponseMessage> UpdatePatient(PatientDto dto);
         Task<List<string>?> ReadHistory(int patId);
         Task<HttpResponseMessage> AddNote(NoteDto note);
+        Task<string> AssessById(int patId);
+        Task<string> AssessByName(string familyName);
     }
 }

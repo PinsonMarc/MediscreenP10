@@ -9,5 +9,14 @@
         public string? Phone { get; set; }
         public DateTime Dob { get; set; }
         public Sex Sex { get; set; }
+        public int Age
+        {
+            get
+            {
+                int age = DateTime.Today.Year - Dob.Year;
+                if (Dob > DateTime.Today.AddYears(-age)) age--;
+                return age;
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ using MediscreenAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Text.RegularExpressions;
 
 namespace MediscreenAPI.Controllers
 {
@@ -24,35 +25,61 @@ namespace MediscreenAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<string>> ById(int id)
         {
-            Patient? res = await _context.Patient.FirstOrDefaultAsync(m => m.Id == id);
-            if (res == null) return NotFound();
-            await AssessPatient(res);
-            //if (history == null) return NotFound();
+            try
+            {
+                Patient? res = await _context.Patient.FirstOrDefaultAsync(m => m.Id == id);
+                if (res == null) return NotFound();
 
-            return Ok("");
+                string assessmentRes = await AssessPatient(res);
+                return Ok(assessmentRes);
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
 
 
         [HttpGet("{familyName}")]
         public async Task<ActionResult<string>> ByFamilyName(string familyName)
         {
-            familyName = familyName.Trim();
-            Patient? res = await _context.Patient.FirstOrDefaultAsync(m => m.Family == familyName);
-            if (res == null) return NotFound();
+            try
+            {
+                familyName = familyName.Trim();
+                Patient? res = await _context.Patient.FirstOrDefaultAsync(m => m.Family == familyName);
+                if (res == null) return NotFound();
 
-            List<History> history = await _readHistoryService.GetByPatIdAsync(0);
-
-            if (history == null) return NotFound();
-
-            return Ok("");
+                string assessmentRes = await AssessPatient(res);
+                return Ok(assessmentRes);
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
 
-        private async Task AssessPatient(Patient pat)
+        private async Task<string> AssessPatient(Patient patient)
         {
-            List<History> history = await _readHistoryService.GetByPatIdAsync(pat.Id);
-            Sex sex = pat.Sex;
+            string[] notes = await _readHistoryService.GetByPatIdAsync(patient.Id);
+            int triggers = CountTriggerWords(string.Join(" ", notes));
+            string riskName = _riskRules.EvaluateRisk(patient.Age, patient.Sex, triggers);
 
+            return GetResultString(patient, riskName);
+        }
 
+        private string GetResultString(Patient patient, string riskName)
+            => $"Patient : {patient.Given} {patient.Family} (age : {patient.Age}) diabetes assessment is: {riskName}";
+
+        private int CountTriggerWords(string text)
+        {
+            Dictionary<string, int> keywordCount = new();
+
+            foreach (string trigger in _riskRules.Triggers)
+            {
+                MatchCollection matches = Regex.Matches(text, trigger, RegexOptions.IgnoreCase);
+                keywordCount.Add(trigger, matches.Count);
+            }
+            return keywordCount.Values.Sum();
         }
     }
 }
