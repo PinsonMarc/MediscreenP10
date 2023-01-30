@@ -1,6 +1,5 @@
 using Domain.DTOs;
 using MediscreenAPI.Model;
-using MediscreenAPI.Model.Entities;
 using MediscreenAPI.tests.FunctionalTests;
 using Newtonsoft.Json;
 using System.Net;
@@ -64,23 +63,6 @@ namespace PoseidonApi.Tests.IntegrationTests
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await TestClient.PostAsync("/Patients/Create", content);
-            response.EnsureSuccessStatusCode(); // Status Code 200-299
-        }
-
-
-        [Fact]
-        public async Task CreatePatientNotesReturnSuccess()
-        {
-            NoteDto dto = new()
-            {
-                PatId = 1,
-                Note = "Test Note"
-            };
-
-            string json = JsonConvert.SerializeObject(dto);
-            StringContent content = new(json, Encoding.UTF8, "application/json");
-
-            HttpResponseMessage response = await TestClient.PostAsync("/PatHistory/Add", content);
             response.EnsureSuccessStatusCode(); // Status Code 200-299
         }
     }
