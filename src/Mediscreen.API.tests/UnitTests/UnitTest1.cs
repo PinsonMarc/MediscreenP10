@@ -1,4 +1,4 @@
-namespace MediscreenAPI.tests
+namespace MediscreenAPI.tests.UnitTests
 {
     public class UnitTest1
     {
